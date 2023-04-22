@@ -4,6 +4,7 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,6 +23,7 @@ import com.example.diaryapp.presentation.screens.auth.AuthenticationViewModel
 import com.example.diaryapp.presentation.screens.home.HomeScreen
 import com.example.diaryapp.utils.Constants.APP_ID
 import com.example.diaryapp.utils.Constants.WRITE_SCREEN_ARG_ID_KEY
+import com.stevdzasan.diaryapp.data.repository.MongoDB
 import com.stevdzasan.messagebar.rememberMessageBarState
 import com.stevdzasan.onetap.rememberOneTapSignInState
 import io.realm.kotlin.mongodb.App
@@ -104,7 +106,11 @@ fun NavGraphBuilder.homeRoute(
         }, navigateToWrite = navigateToWrite
         )
 
-        DisplayAlertDialog(title = "Sign out",
+        LaunchedEffect(key1 = Unit) {
+            MongoDB.configureTheRealm()
+        }
+        DisplayAlertDialog(
+            title = "Sign out",
             message = "Are you sure you want to sign out from Google Account",
             dialogOpened = signOutDialogOpened,
             onDialogClosed = {
