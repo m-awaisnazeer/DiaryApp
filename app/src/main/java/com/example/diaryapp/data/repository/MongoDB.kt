@@ -1,4 +1,4 @@
-package com.stevdzasan.diaryapp.data.repository
+package com.example.diaryapp.data.repository
 
 import com.example.diaryapp.model.Diary
 import com.example.diaryapp.model.RequestState
@@ -28,7 +28,6 @@ object MongoDB : MongoRepository {
     init {
         configureTheRealm()
     }
-
     override fun configureTheRealm() {
         if (user != null) {
             val config = SyncConfiguration.Builder(user, setOf(Diary::class))

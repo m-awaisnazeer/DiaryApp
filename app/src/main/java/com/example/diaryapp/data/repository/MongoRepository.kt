@@ -1,4 +1,4 @@
-package com.stevdzasan.diaryapp.data.repository
+package com.example.diaryapp.data.repository
 
 import com.example.diaryapp.model.Diary
 import com.example.diaryapp.model.RequestState

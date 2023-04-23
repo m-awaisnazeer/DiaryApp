@@ -1,6 +1,7 @@
 package com.example.diaryapp.presentation.screens.home
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -60,6 +61,8 @@ fun HomeContent(
 @Composable
 fun DateHeader(localDate: LocalDate) {
     Row(
+        modifier = Modifier.padding(vertical = 14.dp)
+            .background(MaterialTheme.colorScheme.surface),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(horizontalAlignment = Alignment.End) {
@@ -91,7 +94,7 @@ fun DateHeader(localDate: LocalDate) {
 
             Text(
                 text = localDate.year.toString(),
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38F),
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5F),
                 style = TextStyle(
                     fontSize = MaterialTheme.typography.bodySmall.fontSize,
                     fontWeight = FontWeight.Light
