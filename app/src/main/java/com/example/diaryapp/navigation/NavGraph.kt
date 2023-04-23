@@ -1,9 +1,9 @@
 package com.example.diaryapp.navigation
 
 import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -16,13 +16,14 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.diaryapp.model.RequestState
 import com.example.diaryapp.presentation.components.DisplayAlertDialog
 import com.example.diaryapp.presentation.screens.auth.AuthenticationScreen
 import com.example.diaryapp.presentation.screens.auth.AuthenticationViewModel
 import com.example.diaryapp.presentation.screens.home.HomeScreen
+import com.example.diaryapp.presentation.screens.home.HomeViewModel
 import com.example.diaryapp.utils.Constants.APP_ID
 import com.example.diaryapp.utils.Constants.WRITE_SCREEN_ARG_ID_KEY
-import com.example.diaryapp.presentation.screens.home.HomeViewModel
 import com.stevdzasan.messagebar.rememberMessageBarState
 import com.stevdzasan.onetap.rememberOneTapSignInState
 import io.realm.kotlin.mongodb.App
@@ -32,26 +33,35 @@ import kotlinx.coroutines.withContext
 
 @Composable
 fun SetUpNavGraph(
-    startDestination: String, navHostController: NavHostController
+    startDestination: String,
+    navHostController: NavHostController,
+    onDataLoaded: () -> Unit
 ) {
     NavHost(
         navController = navHostController, startDestination = startDestination
     ) {
-        authenticateRoute {
-            navHostController.popBackStack()
-            navHostController.navigate(Screen.Home.route)
-        }
-        homeRoute(navigateToWrite = { navHostController.navigate(Screen.Write.route) },
+        authenticateRoute(
+            navigateToHome = {
+                navHostController.popBackStack()
+                navHostController.navigate(Screen.Home.route)
+            },
+            onDataLoaded = onDataLoaded
+        )
+        homeRoute(
+            navigateToWrite = { navHostController.navigate(Screen.Write.route) },
             navigateToAuth = {
                 navHostController.popBackStack()
                 navHostController.navigate(Screen.Authentication.route)
-            })
+            },
+            onDataLoaded = onDataLoaded
+        )
         writeRoute()
     }
 }
 
 fun NavGraphBuilder.authenticateRoute(
-    navigateToHome: () -> Unit
+    navigateToHome: () -> Unit,
+    onDataLoaded: () -> Unit
 ) {
     composable(route = Screen.Authentication.route) {
         val viewModel: AuthenticationViewModel = viewModel()
@@ -59,6 +69,10 @@ fun NavGraphBuilder.authenticateRoute(
         val loadingState by viewModel.loadingState
         val oneTapState = rememberOneTapSignInState()
         val messageBarState = rememberMessageBarState()
+
+        LaunchedEffect(key1 = Unit) {
+            onDataLoaded()
+        }
 
         AuthenticationScreen(
             authenticated = authenticated,
@@ -86,9 +100,10 @@ fun NavGraphBuilder.authenticateRoute(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 fun NavGraphBuilder.homeRoute(
-    navigateToWrite: () -> Unit, navigateToAuth: () -> Unit
+    navigateToWrite: () -> Unit,
+    navigateToAuth: () -> Unit,
+    onDataLoaded: () -> Unit
 ) {
     composable(route = Screen.Home.route) {
         val viewModel: HomeViewModel = viewModel()
@@ -98,15 +113,22 @@ fun NavGraphBuilder.homeRoute(
         var signOutDialogOpened by remember {
             mutableStateOf(false)
         }
+
+        LaunchedEffect(key1 = diaries) {
+            if (diaries !is RequestState.Loading) {
+                onDataLoaded()
+            }
+        }
+
         HomeScreen(
             diaries = diaries,
             drawerState = drawerState, onMenuClicked = {
-            scope.launch {
-                drawerState.open()
-            }
-        }, onSignOutClicked = {
-            signOutDialogOpened = true
-        }, navigateToWrite = navigateToWrite
+                scope.launch {
+                    drawerState.open()
+                }
+            }, onSignOutClicked = {
+                signOutDialogOpened = true
+            }, navigateToWrite = navigateToWrite
         )
 
         DisplayAlertDialog(
