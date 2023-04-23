@@ -48,7 +48,7 @@ fun HomeScreen(
                 Icon(imageVector = Icons.Default.Edit, contentDescription = "New Diary Icon")
             }
         }) {
-
+            HomeContent(paddingValues = it, diaryNotes = mapOf(), onClick = {})
         }
     }
 }
