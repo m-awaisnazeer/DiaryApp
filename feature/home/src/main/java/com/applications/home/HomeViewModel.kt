@@ -1,5 +1,6 @@
 package com.applications.home
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -12,9 +13,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import java.time.ZoneId
 import javax.inject.Inject
-
+@SuppressLint("NewApi")
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+internal class HomeViewModel @Inject constructor(
     private val diaryDao: DiaryDao
 ) : ViewModel() {
     var diaries: MutableState<Diaries> = mutableStateOf(com.applications.util.model.RequestState.Idle)

@@ -1,5 +1,6 @@
 package com.applications.home
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,10 +27,10 @@ import androidx.compose.ui.unit.dp
 import com.applications.util.DiaryHolder
 import com.applications.room.database.Diary
 import java.time.LocalDate
-
+@SuppressLint("NewApi")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeContent(
+internal fun HomeContent(
     paddingValues: PaddingValues,
     diaryNotes: Map<LocalDate, List<Diary>>,
     onClick: (String) -> Unit
@@ -59,8 +60,9 @@ fun HomeContent(
     }
 }
 
+@SuppressLint("NewApi")
 @Composable
-fun DateHeader(localDate: LocalDate) {
+internal fun DateHeader(localDate: LocalDate) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -108,7 +110,7 @@ fun DateHeader(localDate: LocalDate) {
 }
 
 @Composable
-fun EmptyPage(
+internal fun EmptyPage(
     title: String = "Empty Diary",
     subtitle: String = "Write Something"
 ) {
@@ -136,8 +138,9 @@ fun EmptyPage(
     }
 }
 
+@SuppressLint("NewApi")
 @Preview
 @Composable
-fun DateHeaderPreview(){
+internal fun DateHeaderPreview(){
     DateHeader(localDate = LocalDate.now())
 }

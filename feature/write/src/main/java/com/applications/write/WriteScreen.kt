@@ -14,7 +14,7 @@ import java.time.ZonedDateTime
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun WriteScreen(
+internal fun WriteScreen(
     uiState: UiState,
     pagerState: PagerState,
     moodName: () -> String,
