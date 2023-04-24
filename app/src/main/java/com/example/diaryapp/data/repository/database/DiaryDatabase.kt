@@ -3,7 +3,7 @@ package com.example.diaryapp.data.repository.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.diaryapp.data.repository.database.entity.Diary
+import com.applications.util.model.Diary
 
 @Database(
     entities = [Diary::class],

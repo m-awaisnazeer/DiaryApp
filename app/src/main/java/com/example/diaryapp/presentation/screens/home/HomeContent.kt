@@ -23,8 +23,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.diaryapp.data.repository.database.entity.Diary
-import com.applications.ui.components.DiaryHolder
+import com.applications.util.model.Diary
+import com.example.diaryapp.presentation.screens.DiaryHolder
 import java.time.LocalDate
 
 @OptIn(ExperimentalFoundationApi::class)

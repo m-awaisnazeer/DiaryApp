@@ -200,13 +200,13 @@ fun NavGraphBuilder.writeRoute(
             },
             onSaveClicked = {
                 Log.d("mTAG", "onSavedClickec: ")
-                viewModel.upsertDiary(diary = it.apply { mood = com.applications.util.model.Mood.values()[pageNumber].name },
-                    onSuccess = navigateBack,
-                    onError = { message ->
-                        Toast.makeText(
-                            context, message, Toast.LENGTH_SHORT
-                        ).show()
-                    })
+                viewModel.upsertDiary(diary = it.apply {
+                    mood = com.applications.util.model.Mood.values()[pageNumber].name
+                }, onSuccess = navigateBack, onError = { message ->
+                    Toast.makeText(
+                        context, message, Toast.LENGTH_SHORT
+                    ).show()
+                })
             })
     }
 }

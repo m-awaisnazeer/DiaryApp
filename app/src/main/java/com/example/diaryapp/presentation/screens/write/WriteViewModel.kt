@@ -8,8 +8,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.applications.util.Constants.WRITE_SCREEN_ARG_ID_KEY
+import com.applications.util.model.Diary
 import com.example.diaryapp.data.repository.database.DiaryDao
-import com.example.diaryapp.data.repository.database.entity.Diary
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

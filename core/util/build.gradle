@@ -30,7 +30,13 @@ android {
 }
 
 dependencies {
+    implementation libs.compose.tooling.preview
+    implementation libs.core.ktx
+    implementation libs.coroutines.core
+    implementation libs.activity.compose
     implementation libs.material3.compose
+    implementation libs.coil
     implementation libs.room.ktx
+
     implementation(project(":core:ui"))
 }
