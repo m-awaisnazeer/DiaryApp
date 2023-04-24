@@ -2,6 +2,7 @@
 
 package com.example.diaryapp.navigation
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.rememberDrawerState
@@ -59,6 +60,8 @@ fun SetUpNavGraph(
             navigateToAuth = {
                 navHostController.popBackStack()
                 navHostController.navigate(Screen.Authentication.route)
+            },navigateToWriteWithArgs = {
+                navHostController.navigate(Screen.Write.passDiaryId(diaryId = it))
             },
             onDataLoaded = onDataLoaded
         )
@@ -109,7 +112,10 @@ fun NavGraphBuilder.authenticateRoute(
 }
 
 fun NavGraphBuilder.homeRoute(
-    navigateToWrite: () -> Unit, navigateToAuth: () -> Unit, onDataLoaded: () -> Unit
+    navigateToWrite: () -> Unit,
+    navigateToWriteWithArgs: (String) -> Unit,
+    navigateToAuth: () -> Unit,
+    onDataLoaded: () -> Unit
 ) {
     composable(route = Screen.Home.route) {
         val viewModel: HomeViewModel = hiltViewModel()
@@ -132,7 +138,8 @@ fun NavGraphBuilder.homeRoute(
             }
         }, onSignOutClicked = {
             signOutDialogOpened = true
-        }, navigateToWrite = navigateToWrite
+        }, navigateToWrite = navigateToWrite,
+            navigateToWriteWithArgs = navigateToWriteWithArgs
         )
 
         DisplayAlertDialog(
@@ -193,6 +200,7 @@ fun NavGraphBuilder.writeRoute(
                 })
             },
             onSaveClicked = {
+                Log.d("mTAG", "onSavedClickec: ")
                 viewModel.upsertDiary(diary = it.apply { mood = Mood.values()[pageNumber].name },
                     onSuccess = navigateBack,
                     onError = { message ->

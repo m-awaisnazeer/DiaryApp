@@ -23,7 +23,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.diaryapp.model.Diary
+import com.example.diaryapp.data.repository.database.entity.Diary
 import com.example.diaryapp.presentation.components.DiaryHolder
 import java.time.LocalDate
 
@@ -48,7 +48,7 @@ fun HomeContent(
 
                 items(
                     items = diaries,
-                    key = { it._id.toString() }
+                    key = { it.id.toString() }
                 ) {
                     DiaryHolder(diary = it, onClick = onClick)
                 }
