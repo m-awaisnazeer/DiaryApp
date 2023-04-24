@@ -1,4 +1,4 @@
-package com.example.diaryapp.presentation.screens.write
+package com.applications.write
 
 import android.annotation.SuppressLint
 import androidx.compose.material3.ExperimentalMaterial3Api

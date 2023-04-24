@@ -1,4 +1,4 @@
-package com.example.diaryapp.presentation.screens.write
+package com.applications.write
 
 import android.util.Log
 import androidx.compose.runtime.getValue
