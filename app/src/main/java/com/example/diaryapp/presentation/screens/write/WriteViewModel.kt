@@ -7,10 +7,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.applications.util.Constants.WRITE_SCREEN_ARG_ID_KEY
 import com.example.diaryapp.data.repository.database.DiaryDao
 import com.example.diaryapp.data.repository.database.entity.Diary
-import com.example.diaryapp.model.Mood
-import com.example.diaryapp.utils.Constants.WRITE_SCREEN_ARG_ID_KEY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -43,7 +42,7 @@ class WriteViewModel @Inject constructor(
         if (uiState.selectedDiaryId != null) {
             viewModelScope.launch {
                 val diary = diaryDao.getDiaryById(uiState.selectedDiaryId!!)
-                setMood(mood = Mood.valueOf(diary.mood))
+                setMood(mood = com.applications.util.model.Mood.valueOf(diary.mood))
                 setSelectedDiary(diary = diary)
                 setTitle(title = diary.title)
                 setDescription(description = diary.description)
@@ -63,7 +62,7 @@ class WriteViewModel @Inject constructor(
         uiState = uiState.copy(description = description)
     }
 
-    private fun setMood(mood: Mood) {
+    private fun setMood(mood: com.applications.util.model.Mood) {
         uiState = uiState.copy(mood = mood)
     }
 
@@ -122,5 +121,5 @@ data class UiState(
     val selectedDiary: Diary? = null,
     val title: String = "",
     val description: String = "",
-    val mood: Mood = Mood.Neutral
+    val mood: com.applications.util.model.Mood = com.applications.util.model.Mood.Neutral
 )

@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.diaryapp.data.repository.Diaries
 import com.example.diaryapp.data.repository.database.DiaryDao
-import com.example.diaryapp.model.RequestState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
@@ -18,7 +17,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val diaryDao: DiaryDao
 ) : ViewModel() {
-    var diaries: MutableState<Diaries> = mutableStateOf(RequestState.Idle)
+    var diaries: MutableState<Diaries> = mutableStateOf(com.applications.util.model.RequestState.Idle)
 
     init {
         observeAllDiaries()
@@ -31,13 +30,13 @@ class HomeViewModel @Inject constructor(
                     val result = list.groupBy {
                         it.date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
                     }
-                    diaries.value = RequestState.Success(
+                    diaries.value = com.applications.util.model.RequestState.Success(
                         data = result
                     )
                 }
 
             } catch (e: Exception) {
-                flow { emit(RequestState.Error(e)) }
+                flow { emit(com.applications.util.model.RequestState.Error(e)) }
             }
         }
     }

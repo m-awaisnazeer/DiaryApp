@@ -32,6 +32,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.applications.ui.theme.Elevation
+import com.applications.util.model.Diary
+import com.applications.util.model.Mood
 import java.text.SimpleDateFormat
 import java.time.Instant
 import java.util.Date

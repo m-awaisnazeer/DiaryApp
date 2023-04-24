@@ -40,7 +40,6 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.example.diaryapp.R
 import com.example.diaryapp.data.repository.Diaries
-import com.example.diaryapp.model.RequestState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -72,13 +71,13 @@ fun HomeScreen(
         }) {
             padding = it
             when (diaries) {
-                is RequestState.Error -> {
+                is com.applications.util.model.RequestState.Error -> {
                     EmptyPage(
                         title = "Error", subtitle = "${diaries.error.message}"
                     )
                 }
 
-                is RequestState.Loading -> {
+                is com.applications.util.model.RequestState.Loading -> {
                     Box(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
@@ -87,7 +86,7 @@ fun HomeScreen(
                     }
                 }
 
-                is RequestState.Success -> {
+                is com.applications.util.model.RequestState.Success -> {
                     HomeContent(
                         paddingValues = it,
                         diaryNotes = diaries.data,

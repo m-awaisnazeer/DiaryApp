@@ -37,7 +37,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.diaryapp.data.repository.database.entity.Diary
-import com.example.diaryapp.model.Mood
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
@@ -84,12 +83,12 @@ fun WriteContent(
             Spacer(modifier = Modifier.height(30.dp))
             HorizontalPager(
                 state = pagerState,
-                count = Mood.values().size
+                count = com.applications.util.model.Mood.values().size
             ) { page ->
                 AsyncImage(
                     modifier = Modifier.size(120.dp),
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(Mood.values()[page].icon)
+                        .data(com.applications.util.model.Mood.values()[page].icon)
                         .crossfade(true)
                         .build(),
                     contentDescription = "Mood Image"

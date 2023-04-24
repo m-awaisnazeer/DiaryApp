@@ -23,17 +23,16 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.diaryapp.model.Mood
-import com.example.diaryapp.model.RequestState
 import com.applications.ui.components.DisplayAlertDialog
+import com.applications.util.Constants.APP_ID
+import com.applications.util.Constants.WRITE_SCREEN_ARG_ID_KEY
+import com.applications.util.Screen
 import com.example.diaryapp.presentation.screens.auth.AuthenticationScreen
 import com.example.diaryapp.presentation.screens.auth.AuthenticationViewModel
 import com.example.diaryapp.presentation.screens.home.HomeScreen
 import com.example.diaryapp.presentation.screens.home.HomeViewModel
 import com.example.diaryapp.presentation.screens.write.WriteScreen
 import com.example.diaryapp.presentation.screens.write.WriteViewModel
-import com.example.diaryapp.utils.Constants.APP_ID
-import com.example.diaryapp.utils.Constants.WRITE_SCREEN_ARG_ID_KEY
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
 import com.stevdzasan.messagebar.rememberMessageBarState
@@ -127,7 +126,7 @@ fun NavGraphBuilder.homeRoute(
         }
 
         LaunchedEffect(key1 = diaries) {
-            if (diaries !is RequestState.Loading) {
+            if (diaries !is com.applications.util.model.RequestState.Loading) {
                 onDataLoaded()
             }
         }
@@ -182,7 +181,7 @@ fun NavGraphBuilder.writeRoute(
         WriteScreen(
             uiState = uiState,
             pagerState = pagerState,
-            moodName = { Mood.values()[pageNumber].name },
+            moodName = { com.applications.util.model.Mood.values()[pageNumber].name },
             onTitleChanged = { viewModel.setTitle(title = it) },
             onDescriptionChanged = { viewModel.setDescription(description = it) },
             onDateTimeUpdated = { viewModel.updateDateTime(zonedDateTime = it) },
@@ -201,7 +200,7 @@ fun NavGraphBuilder.writeRoute(
             },
             onSaveClicked = {
                 Log.d("mTAG", "onSavedClickec: ")
-                viewModel.upsertDiary(diary = it.apply { mood = Mood.values()[pageNumber].name },
+                viewModel.upsertDiary(diary = it.apply { mood = com.applications.util.model.Mood.values()[pageNumber].name },
                     onSuccess = navigateBack,
                     onError = { message ->
                         Toast.makeText(

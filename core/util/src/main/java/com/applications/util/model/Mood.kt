@@ -1,8 +1,7 @@
-package com.example.diaryapp.model
+package com.applications.util.model
 
 import androidx.compose.ui.graphics.Color
 import com.applications.ui.theme.HappyColor
-import com.example.diaryapp.R
 import com.applications.ui.theme.AngryColor
 import com.applications.ui.theme.AwfulColor
 import com.applications.ui.theme.BoredColor
@@ -18,6 +17,7 @@ import com.applications.ui.theme.ShamefulColor
 import com.applications.ui.theme.SurprisedColor
 import com.applications.ui.theme.SuspiciousColor
 import com.applications.ui.theme.TenseColor
+import com.applications.util.R
 
 enum class Mood(
     val icon: Int,
