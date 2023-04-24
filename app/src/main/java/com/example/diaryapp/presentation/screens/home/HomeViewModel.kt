@@ -5,11 +5,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.diaryapp.data.repository.Diaries
-import com.example.diaryapp.data.repository.MongoDB
 import com.example.diaryapp.model.RequestState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor() : ViewModel() {
     var diaries: MutableState<Diaries> = mutableStateOf(RequestState.Idle)
 
     init {
@@ -18,9 +20,7 @@ class HomeViewModel : ViewModel() {
 
     private fun observeAllDiaries() {
         viewModelScope.launch {
-            MongoDB.getAllDiaries().collect { result ->
-                diaries.value = result
-            }
+
         }
     }
 }

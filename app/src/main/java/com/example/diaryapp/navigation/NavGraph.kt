@@ -1,14 +1,20 @@
+@file:OptIn(ExperimentalPagerApi::class)
+
 package com.example.diaryapp.navigation
 
+import android.widget.Toast
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -16,6 +22,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.diaryapp.model.Mood
 import com.example.diaryapp.model.RequestState
 import com.example.diaryapp.presentation.components.DisplayAlertDialog
 import com.example.diaryapp.presentation.screens.auth.AuthenticationScreen
@@ -23,8 +30,11 @@ import com.example.diaryapp.presentation.screens.auth.AuthenticationViewModel
 import com.example.diaryapp.presentation.screens.home.HomeScreen
 import com.example.diaryapp.presentation.screens.home.HomeViewModel
 import com.example.diaryapp.presentation.screens.write.WriteScreen
+import com.example.diaryapp.presentation.screens.write.WriteViewModel
 import com.example.diaryapp.utils.Constants.APP_ID
 import com.example.diaryapp.utils.Constants.WRITE_SCREEN_ARG_ID_KEY
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.rememberPagerState
 import com.stevdzasan.messagebar.rememberMessageBarState
 import com.stevdzasan.onetap.rememberOneTapSignInState
 import io.realm.kotlin.mongodb.App
@@ -34,9 +44,7 @@ import kotlinx.coroutines.withContext
 
 @Composable
 fun SetUpNavGraph(
-    startDestination: String,
-    navHostController: NavHostController,
-    onDataLoaded: () -> Unit
+    startDestination: String, navHostController: NavHostController, onDataLoaded: () -> Unit
 ) {
     NavHost(
         navController = navHostController, startDestination = startDestination
@@ -45,26 +53,23 @@ fun SetUpNavGraph(
             navigateToHome = {
                 navHostController.popBackStack()
                 navHostController.navigate(Screen.Home.route)
-            },
-            onDataLoaded = onDataLoaded
+            }, onDataLoaded = onDataLoaded
         )
-        homeRoute(
-            navigateToWrite = { navHostController.navigate(Screen.Write.route) },
+        homeRoute(navigateToWrite = { navHostController.navigate(Screen.Write.route) },
             navigateToAuth = {
                 navHostController.popBackStack()
                 navHostController.navigate(Screen.Authentication.route)
             },
             onDataLoaded = onDataLoaded
         )
-        writeRoute(onBackPressed = {
+        writeRoute(navigateBack = {
             navHostController.popBackStack()
         })
     }
 }
 
 fun NavGraphBuilder.authenticateRoute(
-    navigateToHome: () -> Unit,
-    onDataLoaded: () -> Unit
+    navigateToHome: () -> Unit, onDataLoaded: () -> Unit
 ) {
     composable(route = Screen.Authentication.route) {
         val viewModel: AuthenticationViewModel = viewModel()
@@ -104,12 +109,10 @@ fun NavGraphBuilder.authenticateRoute(
 }
 
 fun NavGraphBuilder.homeRoute(
-    navigateToWrite: () -> Unit,
-    navigateToAuth: () -> Unit,
-    onDataLoaded: () -> Unit
+    navigateToWrite: () -> Unit, navigateToAuth: () -> Unit, onDataLoaded: () -> Unit
 ) {
     composable(route = Screen.Home.route) {
-        val viewModel: HomeViewModel = viewModel()
+        val viewModel: HomeViewModel = hiltViewModel()
         val diaries by viewModel.diaries
         val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
         val scope = rememberCoroutineScope()
@@ -123,15 +126,13 @@ fun NavGraphBuilder.homeRoute(
             }
         }
 
-        HomeScreen(
-            diaries = diaries,
-            drawerState = drawerState, onMenuClicked = {
-                scope.launch {
-                    drawerState.open()
-                }
-            }, onSignOutClicked = {
-                signOutDialogOpened = true
-            }, navigateToWrite = navigateToWrite
+        HomeScreen(diaries = diaries, drawerState = drawerState, onMenuClicked = {
+            scope.launch {
+                drawerState.open()
+            }
+        }, onSignOutClicked = {
+            signOutDialogOpened = true
+        }, navigateToWrite = navigateToWrite
         )
 
         DisplayAlertDialog(
@@ -156,7 +157,7 @@ fun NavGraphBuilder.homeRoute(
 }
 
 fun NavGraphBuilder.writeRoute(
-    onBackPressed: () -> Unit
+    navigateBack: () -> Unit
 ) {
     composable(
         route = Screen.Write.route, arguments = listOf(navArgument(name = WRITE_SCREEN_ARG_ID_KEY) {
@@ -165,10 +166,40 @@ fun NavGraphBuilder.writeRoute(
             defaultValue = null
         })
     ) {
+        val viewModel: WriteViewModel = hiltViewModel()
+        val context = LocalContext.current
+        val uiState = viewModel.uiState
+        val pagerState = rememberPagerState()
+        val pageNumber by remember { derivedStateOf { pagerState.currentPage } }
+
         WriteScreen(
-            selectedDiary = null,
-            onDeleteConfirmed = {},
-            onBackPressed = onBackPressed
-        )
+            uiState = uiState,
+            pagerState = pagerState,
+            moodName = { Mood.values()[pageNumber].name },
+            onTitleChanged = { viewModel.setTitle(title = it) },
+            onDescriptionChanged = { viewModel.setDescription(description = it) },
+            onDateTimeUpdated = { viewModel.updateDateTime(zonedDateTime = it) },
+            onBackPressed = navigateBack,
+            onDeleteConfirmed = {
+                viewModel.deleteDiary(onSuccess = {
+                    Toast.makeText(
+                        context, "Deleted", Toast.LENGTH_SHORT
+                    ).show()
+                    navigateBack()
+                }, onError = { message ->
+                    Toast.makeText(
+                        context, message, Toast.LENGTH_SHORT
+                    ).show()
+                })
+            },
+            onSaveClicked = {
+                viewModel.upsertDiary(diary = it.apply { mood = Mood.values()[pageNumber].name },
+                    onSuccess = navigateBack,
+                    onError = { message ->
+                        Toast.makeText(
+                            context, message, Toast.LENGTH_SHORT
+                        ).show()
+                    })
+            })
     }
 }

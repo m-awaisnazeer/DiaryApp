@@ -25,9 +25,6 @@ object MongoDB : MongoRepository {
     private val user = app.currentUser
     private lateinit var realm: Realm
 
-    init {
-        configureTheRealm()
-    }
     override fun configureTheRealm() {
         if (user != null) {
             val config = SyncConfiguration.Builder(user, setOf(Diary::class))
