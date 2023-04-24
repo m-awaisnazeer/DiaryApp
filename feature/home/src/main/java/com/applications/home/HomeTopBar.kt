@@ -1,4 +1,4 @@
-package com.example.diaryapp.presentation.screens.home
+package com.applications.home
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange

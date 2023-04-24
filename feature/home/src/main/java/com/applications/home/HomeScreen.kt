@@ -1,4 +1,4 @@
-package com.example.diaryapp.presentation.screens.home
+package com.applications.home
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
@@ -38,8 +38,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import com.example.diaryapp.R
-import com.example.diaryapp.data.repository.Diaries
+import com.applications.util.Diaries
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -122,7 +121,7 @@ fun NavigationDrawer(
                 NavigationDrawerItem(label = {
                     Row(modifier = Modifier.padding(horizontal = 12.dp)) {
                         Image(
-                            painter = painterResource(id = R.drawable.google_logo),
+                            painter = painterResource(id = com.applications.ui.R.drawable.google_logo),
                             contentDescription = "google logo"
                         )
                         Spacer(modifier = Modifier.width(12.dp))

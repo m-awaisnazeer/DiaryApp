@@ -1,11 +1,11 @@
-package com.example.diaryapp.presentation.screens.home
+package com.applications.home
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.applications.room.database.DiaryDao
-import com.example.diaryapp.data.repository.Diaries
+import com.applications.util.Diaries
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
