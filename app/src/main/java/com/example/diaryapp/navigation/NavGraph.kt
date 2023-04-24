@@ -16,32 +16,28 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.applications.auth.navigation.authenticateRoute
 import com.applications.ui.components.DisplayAlertDialog
 import com.applications.util.Constants.APP_ID
 import com.applications.util.Constants.WRITE_SCREEN_ARG_ID_KEY
 import com.applications.util.Screen
-import com.example.diaryapp.presentation.screens.auth.AuthenticationScreen
-import com.example.diaryapp.presentation.screens.auth.AuthenticationViewModel
+import com.applications.util.model.Mood
 import com.example.diaryapp.presentation.screens.home.HomeScreen
 import com.example.diaryapp.presentation.screens.home.HomeViewModel
 import com.example.diaryapp.presentation.screens.write.WriteScreen
 import com.example.diaryapp.presentation.screens.write.WriteViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
-import com.stevdzasan.messagebar.rememberMessageBarState
-import com.stevdzasan.onetap.rememberOneTapSignInState
 import io.realm.kotlin.mongodb.App
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import com.applications.util.model.Mood
 
 @Composable
 fun SetUpNavGraph(
@@ -68,46 +64,6 @@ fun SetUpNavGraph(
         writeRoute(navigateBack = {
             navHostController.popBackStack()
         })
-    }
-}
-
-fun NavGraphBuilder.authenticateRoute(
-    navigateToHome: () -> Unit, onDataLoaded: () -> Unit
-) {
-    composable(route = Screen.Authentication.route) {
-        val viewModel: AuthenticationViewModel = viewModel()
-        val authenticated by viewModel.authenticated
-        val loadingState by viewModel.loadingState
-        val oneTapState = rememberOneTapSignInState()
-        val messageBarState = rememberMessageBarState()
-
-        LaunchedEffect(key1 = Unit) {
-            onDataLoaded()
-        }
-
-        AuthenticationScreen(
-            authenticated = authenticated,
-            loadingState = loadingState,
-            oneTapSignInState = oneTapState,
-            messageBarState = messageBarState,
-            onButtonClicked = {
-                oneTapState.open()
-                viewModel.setLoading(true)
-            },
-            onTokenIdReceived = {
-                viewModel.signInWithMongoAtlas(tokenId = it, onSuccess = {
-                    messageBarState.addSuccess("Successfully Authenticated")
-                    viewModel.setLoading(false)
-                }, onError = {
-                    messageBarState.addError(it)
-                    viewModel.setLoading(false)
-                })
-            },
-            onDialogDismissed = {
-                messageBarState.addError(Exception(it))
-            },
-            navigateToHome = navigateToHome
-        )
     }
 }
 

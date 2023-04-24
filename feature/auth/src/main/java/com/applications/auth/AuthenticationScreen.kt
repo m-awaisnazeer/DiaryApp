@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.example.diaryapp.presentation.screens.auth
+package com.applications.auth
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
