@@ -2,9 +2,9 @@ package com.example.diaryapp.di
 
 import android.content.Context
 import androidx.room.Room
+import com.applications.room.database.DateConverter
+import com.applications.room.database.DiaryDatabase
 import com.applications.util.Constants.DIARY_DATABASE
-import com.example.diaryapp.data.repository.database.DateConverter
-import com.example.diaryapp.data.repository.database.DiaryDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

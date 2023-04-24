@@ -17,7 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import com.applications.ui.theme.Elevation
-import com.applications.util.model.Diary
+import com.applications.room.database.Diary
 import com.applications.util.model.Mood
 import java.text.SimpleDateFormat
 import java.time.Instant

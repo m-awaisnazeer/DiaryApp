@@ -1,10 +1,11 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    alias(libs.plugins.com.android.library)
+    alias(libs.plugins.org.jetbrains.kotlin.android)
+    id 'kotlin-kapt'
 }
 
 android {
-    namespace 'com.applications.util'
+    namespace 'com.applications.room'
     compileSdk ProjectConfig.compileSdk
 
     defaultConfig {
@@ -24,32 +25,24 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-        coreLibraryDesugaringEnabled true
     }
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures {
-        compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion ProjectConfig.extensionVersion
-    }
     packagingOptions {
-        resources.excludes.add("META-INF/*")
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
     }
 }
 
 dependencies {
-    implementation libs.compose.tooling.preview
     implementation libs.core.ktx
     implementation libs.coroutines.core
-    implementation libs.activity.compose
-    implementation libs.material3.compose
-    implementation libs.coil
-    implementation libs.room.ktx
-    coreLibraryDesugaring libs.desugar.jdk
 
-    implementation(project(":core:ui"))
-    implementation(project(":data:room"))
+    implementation libs.room.runtime
+    implementation libs.room.ktx
+    kapt libs.room.compiler
+
+//    implementation(project(":core:util"))
 }

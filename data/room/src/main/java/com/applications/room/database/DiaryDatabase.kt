@@ -1,9 +1,8 @@
-package com.example.diaryapp.data.repository.database
+package com.applications.room.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.applications.util.model.Diary
 
 @Database(
     entities = [Diary::class],

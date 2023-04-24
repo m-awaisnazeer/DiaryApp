@@ -24,7 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.applications.util.DiaryHolder
-import com.applications.util.model.Diary
+import com.applications.room.database.Diary
 import java.time.LocalDate
 
 @OptIn(ExperimentalFoundationApi::class)

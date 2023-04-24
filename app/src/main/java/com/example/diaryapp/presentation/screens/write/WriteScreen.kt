@@ -5,7 +5,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import com.applications.util.model.Diary
+import com.applications.room.database.Diary
+import com.applications.util.model.Mood
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
 import java.time.ZonedDateTime
@@ -26,7 +27,7 @@ fun WriteScreen(
 
 ) {
     LaunchedEffect(key1 = uiState.mood) {
-        pagerState.scrollToPage(com.applications.util.model.Mood.valueOf(uiState.mood.name).ordinal)
+        pagerState.scrollToPage(Mood.valueOf(uiState.mood.name).ordinal)
     }
 
     Scaffold(topBar = {

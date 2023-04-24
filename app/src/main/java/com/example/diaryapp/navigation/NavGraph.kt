@@ -41,6 +41,7 @@ import io.realm.kotlin.mongodb.App
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.applications.util.model.Mood
 
 @Composable
 fun SetUpNavGraph(
@@ -181,7 +182,7 @@ fun NavGraphBuilder.writeRoute(
         WriteScreen(
             uiState = uiState,
             pagerState = pagerState,
-            moodName = { com.applications.util.model.Mood.values()[pageNumber].name },
+            moodName = { Mood.values()[pageNumber].name },
             onTitleChanged = { viewModel.setTitle(title = it) },
             onDescriptionChanged = { viewModel.setDescription(description = it) },
             onDateTimeUpdated = { viewModel.updateDateTime(zonedDateTime = it) },
@@ -201,7 +202,7 @@ fun NavGraphBuilder.writeRoute(
             onSaveClicked = {
                 Log.d("mTAG", "onSavedClickec: ")
                 viewModel.upsertDiary(diary = it.apply {
-                    mood = com.applications.util.model.Mood.values()[pageNumber].name
+                    mood = Mood.values()[pageNumber].name
                 }, onSuccess = navigateBack, onError = { message ->
                     Toast.makeText(
                         context, message, Toast.LENGTH_SHORT

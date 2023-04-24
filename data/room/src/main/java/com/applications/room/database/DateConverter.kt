@@ -1,4 +1,4 @@
-package com.example.diaryapp.data.repository.database
+package com.applications.room.database
 
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter

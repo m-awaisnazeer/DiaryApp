@@ -69,3 +69,5 @@ material = { group = "com.google.android.material", name = "material", version.r
 [plugins]
 com-android-library = { id = "com.android.library", version.ref = "com-android-library" }
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-android" }
+#dagger-hilt-android-plugin = { id = "dagger.hilt.android.plugin", version.ref = "dagger-hilt" }
+
