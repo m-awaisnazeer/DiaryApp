@@ -1,4 +1,4 @@
-package com.example.diaryapp.presentation.screens
+package com.example.diaryapp.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
