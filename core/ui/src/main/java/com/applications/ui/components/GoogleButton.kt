@@ -1,4 +1,4 @@
-package com.example.diaryapp.presentation.components
+package com.applications.ui.components
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import com.example.diaryapp.R
+import com.applications.ui.R
 
 @Composable
 fun GoogleButton(

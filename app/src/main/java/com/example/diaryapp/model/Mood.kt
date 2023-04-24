@@ -1,23 +1,23 @@
 package com.example.diaryapp.model
 
 import androidx.compose.ui.graphics.Color
+import com.applications.ui.theme.HappyColor
 import com.example.diaryapp.R
-import com.example.diaryapp.ui.theme.AngryColor
-import com.example.diaryapp.ui.theme.AwfulColor
-import com.example.diaryapp.ui.theme.BoredColor
-import com.example.diaryapp.ui.theme.CalmColor
-import com.example.diaryapp.ui.theme.DepressedColor
-import com.example.diaryapp.ui.theme.DisappointedColor
-import com.example.diaryapp.ui.theme.HappyColor
-import com.example.diaryapp.ui.theme.HumorousColor
-import com.example.diaryapp.ui.theme.LonelyColor
-import com.example.diaryapp.ui.theme.MysteriousColor
-import com.example.diaryapp.ui.theme.NeutralColor
-import com.example.diaryapp.ui.theme.RomanticColor
-import com.example.diaryapp.ui.theme.ShamefulColor
-import com.example.diaryapp.ui.theme.SurprisedColor
-import com.example.diaryapp.ui.theme.SuspiciousColor
-import com.example.diaryapp.ui.theme.TenseColor
+import com.applications.ui.theme.AngryColor
+import com.applications.ui.theme.AwfulColor
+import com.applications.ui.theme.BoredColor
+import com.applications.ui.theme.CalmColor
+import com.applications.ui.theme.DepressedColor
+import com.applications.ui.theme.DisappointedColor
+import com.applications.ui.theme.HumorousColor
+import com.applications.ui.theme.LonelyColor
+import com.applications.ui.theme.MysteriousColor
+import com.applications.ui.theme.NeutralColor
+import com.applications.ui.theme.RomanticColor
+import com.applications.ui.theme.ShamefulColor
+import com.applications.ui.theme.SurprisedColor
+import com.applications.ui.theme.SuspiciousColor
+import com.applications.ui.theme.TenseColor
 
 enum class Mood(
     val icon: Int,

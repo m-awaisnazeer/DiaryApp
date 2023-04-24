@@ -1,4 +1,4 @@
-package com.example.diaryapp.presentation.components
+package com.applications.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -31,9 +31,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.example.diaryapp.data.repository.database.entity.Diary
-import com.example.diaryapp.model.Mood
-import com.example.diaryapp.ui.theme.Elevation
+import com.applications.ui.theme.Elevation
 import java.text.SimpleDateFormat
 import java.time.Instant
 import java.util.Date

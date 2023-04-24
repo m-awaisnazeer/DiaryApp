@@ -6,9 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
+import com.applications.ui.theme.DiaryAppTheme
 import com.example.diaryapp.navigation.Screen
 import com.example.diaryapp.navigation.SetUpNavGraph
-import com.example.diaryapp.ui.theme.DiaryAppTheme
 import com.example.diaryapp.utils.Constants.APP_ID
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.kotlin.mongodb.App
